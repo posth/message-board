@@ -1,8 +1,9 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <!--receiving data from child will be in the $event object through custom event-->
-            <message [message]="message" (editClicked)="message.content = $event"></message>
-        </div>
+        <message-input></message-input>
+    </div>
+    <hr>
+    <div class="row">
+        <message-list></message-list>
     </div>
 </div>
