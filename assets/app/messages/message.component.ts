@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Message } from './message.model';
 
@@ -10,7 +10,15 @@ import { Message } from './message.model';
 export class MessageComponent   {
 
     @Input('message') message: Message;
+
+    //Emitting an event from child to parent
+    @Output() editClicked = new EventEmitter<string>();
     
     constructor() { }
+
+    onEdit() {
+        //emitting the event through this method and you can pass data through the emit function
+        this.editClicked.emit('A new value');
+    }
 
 }
