@@ -1,7 +1,17 @@
 <div class="col-md-8 col-md-offset-2">
-    <div class="form-group">
-        <label for="content">Content</label>
-        <input type="text" id="content" class="form-control" #input>
-    </div>
-    <button class="btn btn-primary" type="submit" (click)="onSave(input.value)">Save</button>
+    <!--NgSubmit is an angular2 directive/custom event #f is a local reference to this form HTML element, which by setting it equal to ngForm is a reference to the object angular2 is passing when submitting-->
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="form-group">
+            <label for="content">Content</label>
+            <!--Name = content is an HTML attribute that when the form is submitted angular2 will store it in an object with access to this value in property of content-->
+            <input 
+                type="text" 
+                id="content" 
+                class="form-control"
+                ngModel
+                name="content"
+                required>
+        </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
 </div>
