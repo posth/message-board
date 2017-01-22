@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
             <nav class="col-md-8 col-md-offset-2">
                 <ul class="nav nav-tabs">
                     <li><a routerLinkActive="active" [routerLink]="['signup']">Sign up</a></li>
-                    <li><a routerLinkActive="active" [routerLink]="['sigin']">Sign in</a></li>
+                    <li><a routerLinkActive="active" [routerLink]="['signin']">Sign in</a></li>
                     <li><a routerLinkActive="active" [routerLink]="['logout']">Log out</a></li>
                 </ul>
             </nav>
