@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Http, Response, Headers } from '@angular/http';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { Message } from './message.model';
 
@@ -8,9 +11,25 @@ export class MessageService {
     //private to make it scoped only within this class
     private messages: Message[] = [];
 
+    constructor(private _http:Http) { }
+
     addMessage(message: Message) {
-        console.log(this.messages);
         this.messages.push(message);
+
+        //convert the message into a JSON object
+        const body = JSON.stringify(message);
+
+        //Ensure we're sending JSON as that's what the backend is expecting - pass it as a third parameter in the http post service request
+        const headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        //This sets up the Observable and doesn't send the request
+        //Someone needs to subscribe to this observable for it to send
+        //it returns from the server a response as a json object, only gives you the data which is attached to the response and converts it to JSON
+        return this._http.post('http://localhost:3000/message', body, {headers: headers})
+            .map((response: Response) => response.json())
+            .catch((error: Response) => Observable.throw(error.json()));
     }
 
     getMessage(): Message[] {

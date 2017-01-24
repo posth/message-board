@@ -15,7 +15,14 @@ export class MessageInputComponent {
     //Template drive approach from angular2 to submit and manipulate forms from the forms module
     onSubmit(form: NgForm) {
         const message = new Message(form.value.content, 'Marc');
-        this._messageService.addMessage(message);
+
+        //Chaining subscribe because the service function returns an Observable
+        this._messageService.addMessage(message)
+            .subscribe(
+                data => console.log(data),
+                error => console.error(error)
+            );
+        
         form.reset();
     }
 }
