@@ -11,7 +11,7 @@ export class MessageService {
     //private to make it scoped only within this class
     private messages: Message[] = [];
 
-    constructor(private _http:Http) { }
+    constructor(private _http: Http) { }
 
     addMessage(message: Message) {
         this.messages.push(message);
@@ -27,14 +27,28 @@ export class MessageService {
         //This sets up the Observable and doesn't send the request
         //Someone needs to subscribe to this observable for it to send
         //it returns from the server a response as a json object, only gives you the data which is attached to the response and converts it to JSON
-        return this._http.post('http://localhost:3000/message', body, {headers: headers})
+        return this._http.post('http://localhost:3000/message', body, { headers: headers })
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
-    getMessage(): Message[] {
-        return this.messages;
+    getMessage() {
+        return this._http.get('http://localhost:3000/message')
+            //Map needs an observable
+            .map((response: Response) => {
+                const messages = response.json().obj;
+
+                let transformedMessages: Message[] = [];
+
+                for (let message of messages) {
+                    transformedMessages.push(new Message(message.content, 'Dummy', message.id, null));
+                }
+                this.messages = transformedMessages;
+                return transformedMessages;
+            })
+            .catch((error: Response) => Observable.throw(error.json()));
     }
+
 
     //deleting the message passed as a parameter from the messages array at the index of the message passed
     deleteMessage(message: Message) {
