@@ -20,6 +20,10 @@ export class MessageInputComponent implements OnInit {
         if (this.message) {
             //Editing
             this.message.content = form.value.content;
+            this._messageService.updateMessage(this.message) 
+                .subscribe(
+                    result => console.log(result)
+                );
             //Clean message so it doesn't output
             this.message = null;
         } else {
