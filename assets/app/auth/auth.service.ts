@@ -10,13 +10,22 @@ export class AuthService {
 
     constructor(private _http: Http) { }
 
-    //reach out to backend
     signup(user: User) {
 
         const body = JSON.stringify(user);
         const headers = new Headers({ 'Content-Type': 'application/json' })
 
         return this._http.post('http://localhost:3000/user', body, { headers: headers })
+            .map((response: Response) => response.json())
+            .catch((error: Response) => Observable.throw(error.json()));
+    }
+
+    signin(user: User) {
+
+        const body = JSON.stringify(user);
+        const headers = new Headers({ 'Content-Type': 'application/json' })
+
+        return this._http.post('http://localhost:3000/user/signin', body, { headers: headers })
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }
