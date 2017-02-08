@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 //Routes and child routes for the application
 var appRoutes = require('./routes/app');
 var messageRoutes = require('./routes/messages');
+var userRoutes = require('./routes/user');
 
 var app = express();
 
@@ -38,6 +39,7 @@ app.use(function (req, res, next) {
 
 //Using the routes - the order is important here because if it's inversed, all requests will be handled by appRoutes
 app.use('/message', messageRoutes);
+app.use('/user', userRoutes);
 app.use('/', appRoutes);
 
 // catch 404 and forward to error handler
