@@ -10,7 +10,6 @@ import { MessageService } from './message.service';
             <!--receiving data from child will be in the $event object through custom event-->
             <message 
             [message]="message" 
-            (editClicked)="message.content = $event"
             *ngFor="let message of messages"></message>
         </div>
     `
