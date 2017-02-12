@@ -29,4 +29,15 @@ export class AuthService {
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }
+
+    //Authentication related methods
+    logout() {
+        //Deleting token and user id in the local storage -> means that you're logged out because you don't have the token anymore
+        localStorage.clear();
+    }
+
+    isLoggedIn() {
+        //Check if the token exists and return that boolean
+        return localStorage.getItem('token') !== null;
+    }
 }
