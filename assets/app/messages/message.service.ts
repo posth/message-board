@@ -25,10 +25,15 @@ export class MessageService {
             'Content-Type': 'application/json'
         });
 
+        //Sending the token along with the request in a query string in the URL, if it exists
+        const token = localStorage.getItem('token')
+            ? '?token=' + localStorage.getItem('token')
+            : '';
+
         //This sets up the Observable and doesn't send the request
         //Someone needs to subscribe to this observable for it to send
         //it returns from the server a response as a json object, only gives you the data which is attached to the response and converts it to JSON
-        return this._http.post('http://localhost:3000/message', body, { headers: headers })
+        return this._http.post('http://localhost:3000/message' + token, body, { headers: headers })
             .map((response: Response) => {
                 const result = response.json();
                 const message = new Message(result.obj.content, 'Dummy', result.obj._id, null);
@@ -70,8 +75,12 @@ export class MessageService {
             'Content-Type': 'application/json'
         });
 
+        const token = localStorage.getItem('token')
+            ? '?token=' + localStorage.getItem('token')
+            : '';
+
         //Passing message ID to the path since the back end is expecting it
-        return this._http.patch('http://localhost:3000/message/' + message.messageId, body, { headers: headers })
+        return this._http.patch('http://localhost:3000/message/' + message.messageId + token, body, { headers: headers })
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }
@@ -80,8 +89,12 @@ export class MessageService {
     deleteMessage(message: Message) {
         this.messages.splice(this.messages.indexOf(message), 1);
 
+        const token = localStorage.getItem('token')
+            ? '?token=' + localStorage.getItem('token')
+            : '';
+
         //Passing message ID to the path since the back end is expecting it - and deleting it
-        return this._http.delete('http://localhost:3000/message/' + message.messageId)
+        return this._http.delete('http://localhost:3000/message/' + message.messageId + token)
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }
